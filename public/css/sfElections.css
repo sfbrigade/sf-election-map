@@ -1,0 +1,40 @@
+.precincts {
+		    stroke: #e5e5e5;
+		    fill:none;
+		    stroke-width: 1px;
+		}
+
+#map1{
+	position: relative;
+	overflow: hidden;
+}
+
+.well{
+	margin-top: 20px;
+	background-color:#fcfcfc;
+}
+
+
+#votes-tooltip{
+			position: absolute;
+			width: 200px;
+			height: 60px;
+			padding: 8px;
+			border-radius: 5px;
+			box-shadow: 2px 2px 5px #888;
+			background-color: #fcfcfc;
+			border:1px solid #f0f0f0;
+			opacity: 0;
+}
+
+#supp-opp-radio{
+	opacity:0;
+}
+
+#supp-text{
+	display: none;
+}
+
+#opp-text{
+	display: block;
+}
