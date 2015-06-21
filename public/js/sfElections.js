@@ -26,7 +26,7 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
 
 
                             d3.select('#supp-opp-radio').style('opacity', 1)
-                            d3.select('#oppRadio').attr('checked', true);
+                            //d3.select('#oppRadio').attr('checked', true);
 
 
 
@@ -152,10 +152,38 @@ function votesAndMoney(error, votes){
       var id = d.PrecinctID;
       //console.log(d)
       votesIdx.push((id).toString());
+
   })
+
+
+function changeColor(checked){
+
+        console.log(checked);
+
+            if(checked=='support'){
+
+              d3.selectAll('.precincts')
+              .classed('Reds', false)
+              .classed('Blues', true)
+
+              changeValue('Yes');
+
+           }
+           else{
+              d3.selectAll('.precincts')
+              .classed('Reds', true)
+              .classed('Blues', false)
+
+              changeValue('No')
+           }
+}
+
 
  
 function changeValue(checked){
+
+
+
       votes.forEach(function(d, i){
 
         var id = d.PrecinctID;
@@ -222,28 +250,15 @@ function changeValue(checked){
 
            checked = $('input:radio[name=inlineRadioOptions]:checked').val()
 
-           if(checked=='support'){
 
-              d3.selectAll('.precincts')
-              .classed('Reds', false)
-              .classed('Blues', true)
-
-              changeValue('Yes');
-
-           }
-           else{
-              d3.selectAll('.precincts')
-              .classed('Reds', true)
-              .classed('Blues', false)
-
-              changeValue('No')
-           }
-
+           changeColor(checked)
                               
          })
 
     //Default
-    changeValue('No')
+    d3.select('#oppRadio').attr('checked', true);
+    checked = $('input:radio[name=inlineRadioOptions]:checked').val()
+    changeColor(checked)
 
 }
 
