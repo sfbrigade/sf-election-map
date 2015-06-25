@@ -1,8 +1,10 @@
 var ballots =[
    {
+      "pass": true,
+      "topass": '66⅔%',
       "title":"San Francisco Transportation and Road Improvement Bond",
       "letter":"A",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"To construct, redesign and rebuild streets and sidewalks and to make infrastructure repairs and improvements that increase MUNI service reliability, ease traffic congestion, reduce vehicle travel times, enhance pedestrian and bicycle safety, and improve disabled access, shall the City and County of San Francisco issue $500 million in general obligation bonds, subject to independent citizen oversight and regular audits? ",
       "cmt_for":[
          {
             "filer_naml":[
@@ -25,9 +27,11 @@ var ballots =[
       ]
    },
       {
+        "pass": true, 
+      "topass": "50%+1",
    "title": "Adjusting Transportation Funding for Population Growth",
    "letter":"B",
-   "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+   "about":"Shall the City amend the Charter to increase the amount the City provides to the Municipal Transportation Agency based on increases in the City’s population, with such funds to be used to improve Muni and to improve street safety? ",
    "cmt_for": [
             
       ],
@@ -36,9 +40,11 @@ var ballots =[
       ] 
    },
    {
+    "pass": true,
+    "topass": "50%+1",
       "title":"Children's Fund; Public Education Enrichment Fund; Children and Families Council; Rainy Day Reserve",
       "letter":"C",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall the City amend the Charter to support services to children, youth, and their families by extending the Children’s Fund for 25 years and increasing its funding; extending the Public Education Enrichment Fund for 26 years; creating an Our Children, Our Families Council; and dividing the existing Rainy Day Reserve into a City Rainy Day Reserve and a School District Rainy Day Reserve?",
           "cmt_for":[
       {
         "filer_naml":[
@@ -67,9 +73,11 @@ var ballots =[
       ]
    },
    {
+    "pass": true,
+    "topass": "50%+1" ,
    "title": "Retiree Health Benefits for Former Redevelopment Agency and Successor Agency Employees",
    "letter":"D",
-   "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+   "about":"Shall the City amend the Charter to make retiree health care benefits available to certain employees of the former San Francisco Redevelopment Agency and the Successor Agency?",
    "cmt_for": [
             
       ],
@@ -78,9 +86,11 @@ var ballots =[
       ] 
    },
    {
+    "pass": false,
+    "topass":"66⅔%",
       "title":"Tax on Sugar-Sweetened Beverages",
       "letter":"E",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall the City collect a tax of 2 cents per ounce from the distributors of sugar-sweetened beverages to fund health, nutrition, physical education and active recreation programs?",
       "cmt_for":[
          {
             "filer_naml":[
@@ -100,9 +110,11 @@ var ballots =[
       ]
    },
    {
+    "pass": true, 
+    "topass": "50%+1",
       "title":"Pier 70",
       "letter":"F",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall the City increase the height limit for new buildings on the 28-acre development site in the Pier 70 area from 40 feet to 90 feet; and shall it be City policy to encourage the City to proceed with public approval processes, including environmental review, for this mixed-use project, and encourage parks, housing, cultural space, and job creation for this site?",
       "cmt_for":[
          {
             "filer_naml":[
@@ -117,9 +129,11 @@ var ballots =[
       ]
    },
    {
+    "pass": false,
+    "topass": "50%+1",
    "title": "Additional Transfer Tax on Residential Property Sold Within 5 Years of Purchase",
    "letter":"G",
-   "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+   "about":"Shall the City impose an additional tax of between 14% and 24% on the total sale price of certain multi-unit residential properties that are sold within five years of purchase or transfer, subject to certain exceptions? ",
 "cmt_for":[
       {
         "filer_naml":[
@@ -139,9 +153,11 @@ var ballots =[
     ] 
    },
    {
+    "pass": false, 
+    "topass": "50%+1",
       "title":"Requiring Certain Golden Gate Park Athletic Fields To Be Kept As Grass With No Artificial Lighting",
       "letter":"H",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall the City be required to keep natural grass at all athletic fields in Golden Gate Park west of Crossover Drive and to prohibit nighttime sports field lighting in these areas? ",
       "cmt_for":[
          {
             "filer_naml":[
@@ -160,6 +176,8 @@ var ballots =[
       ]
    },
    {
+    "pass": true, 
+    "topass": "50%+1",
       "title":"Renovation of Playgrounds, Walking Trails, and Athletic Fields",
       "letter":"I",
       "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
@@ -188,9 +206,11 @@ var ballots =[
       ]
    },
    {
+    "pass": true, 
+    "topass": "50%+1",
       "title":"Minimum Wage Increase",
       "letter":"J",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall the City gradually increase the minimum wage to $15 per hour by July 1, 2018, with further increases based on inflation? ",
       "cmt_for":[
          {
             "filer_naml":[
@@ -226,9 +246,11 @@ var ballots =[
       ]
    },
    {
+    "pass": true, 
+    "topass": " 50%+1",
    "title": "Affordable Housing",
    "letter":"K",
-   "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+   "about":"Shall it be City policy to help construct or rehabilitate at least 30,000 homes by 2020, more than 50% of which will be affordable for middle-class households and more than 33% of which will be affordable for low- and moderate-income households, and secure sufficient funding to achieve that goal?",
    "cmt_for": [
       {
         "filer_naml":[
@@ -250,9 +272,11 @@ var ballots =[
       ] 
    },
    {
+    "pass": false,
+    "topass": "50%+1",
       "title":"Policy Regarding Transportation Priorities",
       "letter":"L",
-      "about":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempor vitae leo suscipit pellentesque. ",
+      "about":"Shall it be City policy to change parking and transportation priorities? ",
       "cmt_for":[
          {
             "filer_naml":[
@@ -345,3 +369,5 @@ ballots.forEach(function(d){
 
 
 });
+
+console.log(ballots);

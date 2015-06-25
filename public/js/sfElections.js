@@ -1,3 +1,20 @@
+
+
+// create a map in the "map" div, set the view to a given place and zoom
+var map = L.map('map').setView([37.8, -122.43], 10);
+
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+
+
+var schAUrl = "http://data.sfgov.org/resource/q66q-d2tr.json?"
+
+
+
+
 var checked;
 
 var ballotSelector = d3.selectAll('#ballot-dropdown li a')
@@ -6,11 +23,49 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                             var val = ob.attr('value');
                             var letter = val.toLowerCase();
                             var alp = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
+                            var lIdx = alp.indexOf(letter);
 
-                            var moneyOb = ballots[alp.indexOf(letter)]
+                            var moneyOb = ballots[lIdx]
+
+                            //if there are elements then create a query
+
+
+
+
+
+                            var cmtFor =[];
+
+
+                            moneyOb.cmt_for.forEach(function(f){
+                                if(f.query){
+                                  //add to queue
+                                  cmtFor.push(schAUrl + f.query);
+                                }
+                            });
+
+                            var cmtAg = [];
+
+                            moneyOb.cmt_against.forEach(function(a){
+                                if(a.query){
+                                  //add to queue
+                                  cmtAg.push(schAUrl + a.query);
+                                }
+                            });
 
                             d3.select('#ballot-name').html('Measure '+ val)
                             d3.select('#ballot-title').html(moneyOb.title);
+                            d3.select('#ballot-about').html(moneyOb.about);
+                            d3.select('#ballot-pass').html(function(){
+
+                                if(moneyOb.pass){
+                                  return "Passed : <span class='text-success glyphicon glyphicon-ok'></span>"
+                                }
+                                else{
+                                  return "Passed : <span class='text-danger glyphicon glyphicon-remove'></span>"
+                                }
+
+
+                            })
 
                             //support or oppose to load correct cf data
 
@@ -25,6 +80,25 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                             console.log("/data/m_"+ letter+ "_votes.json");
 
 
+                            var schAJson = schAUrl + "'" +cmtAg+ "'";
+
+                            console.log(schAJson);
+
+                            
+                            cmtFor.forEach(function(url){
+                               d3.json(url, function(json){
+                                  mapMarkes(json, 'blue')
+                               })
+                            });
+                            
+
+                            cmtAg.forEach(function(url){
+                               d3.json(url, function(json){
+                                  mapMarkes(json, 'red')
+                               })
+                            });
+                            
+
                             d3.select('#supp-opp-radio').style('opacity', 1)
                             //d3.select('#oppRadio').attr('checked', true);
 
@@ -35,10 +109,37 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                                 //.defer(d3.json, money)
                                 .await(votesAndMoney);  
 
-
-
-
                         });
+
+
+function mapMarkes(schAJson, color){
+
+  console.log(schAJson.length, color)
+
+  schAJson.forEach(function(d){
+
+    if(d.tran_location){
+      var lat = d.tran_location.latitude;
+      var lng = d.tran_location.longitude; 
+      var amt = d.tran_amt2;
+
+
+      //console.log(amt)
+      //console.log([lat, lng])
+
+      //map.latLngToLayerPoint([lng, lat])
+
+
+      var circle = L.circle([lat, lng], 50, {
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.5
+        }).addTo(map);
+
+
+    }
+  })
+}
 
 
 var votesTooltip = d3.select('#map1')
@@ -46,8 +147,8 @@ var votesTooltip = d3.select('#map1')
               .attr('id', 'votes-tooltip')
 
 
-var width = 960,
-    height = 600;
+var width = 960*.6,
+    height = 600*.6;
 
 var rateById = d3.map();
 
@@ -57,7 +158,7 @@ var quantize = d3.scale.quantize()
 
 var projection = d3.geo.mercator()
     .center([-122.433701, 37.767683])
-    .scale(250000)
+    .scale(250000*.6)
     .translate([width / 2, height / 2]);
 
 var path = d3.geo.path()
@@ -189,6 +290,7 @@ function changeValue(checked){
         var id = d.PrecinctID;
         var pct = d[checked]/d['Ballots Cast'];
         var qt = quantize(pct)
+        var prctName = d['PrecinctName'] + '<br>'
 
         
         d3.select('#pc_'+id)
@@ -212,7 +314,9 @@ function changeValue(checked){
           var neighborhood = neighOb['Neighborhood'];
           //var pct = voteOb['No']/voteOb['Ballots Cast'];
 
-          var html = (pct*100).toFixed(2) + '% in '+ neighborhood 
+          
+
+          var html = prctName + (pct*100).toFixed(2) + '% in '+ neighborhood 
           //console.log(pct*100 + '% oppose in '+ neighborhood)
 
           votesTooltip
