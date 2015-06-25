@@ -124,8 +124,8 @@ function mapMarkes(schAJson, color){
       var amt = d.tran_amt2;
 
 
-      //console.log(amt)
-      //console.log([lat, lng])
+      console.log(amt)
+      console.log([lat, lng])
 
       //map.latLngToLayerPoint([lng, lat])
 
