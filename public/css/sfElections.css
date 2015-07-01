@@ -1,9 +1,30 @@
+
+.red{
+	fill:red ;
+}
+
+.blue{
+	fill:blue ;
+}
+
+
+
+
+
+.zipareas{
+
+	stroke: #e5e5e5;
+		    fill:none;
+		    stroke-width: 1px;
+
+
+}
 .precincts {
 		    stroke: #e5e5e5;
 		    fill:none;
 		    stroke-width: 1px;
 		}
-
+#map2,
 #map1{
 	position: relative;
 	overflow: hidden;

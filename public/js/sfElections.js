@@ -1,5 +1,5 @@
 
-
+/*
 // create a map in the "map" div, set the view to a given place and zoom
 var map = L.map('map').setView([37.8, -122.43], 10);
 
@@ -8,14 +8,83 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+*/
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 var schAUrl = "http://data.sfgov.org/resource/q66q-d2tr.json?"
 
+var cmtFor =[];
+var cmtAg = [];
 
+var mfor;
+var ag;
 
 
 var checked;
+
+function swtichMoney(currval){
+
+  console.log('Switch Money value is ' + currval)
+
+ d3.selectAll('.zipareas').selectAll('.red').classed('red', false)
+ d3.selectAll('.zipareas').selectAll('.blue').classed('blue', false)
+ 
+ 
+
+
+   var moneyFor = [];
+  var moneyAg = [];
+                            if(currval == 'support'){  
+
+                               
+
+
+                            cmtFor.forEach(function(url, i){
+                              console.log(url)
+
+                               d3.json(url, function(json){
+                                  //mapMarkes(json, 'blue')
+
+                                  mfor = moneyFor.concat(json)
+
+                                 if(i==cmtFor.length-1){
+                                  mapMarkes(mfor, 'blue')
+                                  }
+                                 });
+
+                                
+                               
+                            });
+                           } 
+                            
+                           if(currval == 'oppose'){ 
+
+                            
+
+                            cmtAg.forEach(function(url, i){
+                              console.log(url)
+                               d3.json(url, function(json){
+
+                                  console.log(json)
+                                  ag = moneyAg.concat(json)
+
+                                  if(i==cmtAg.length-1){
+                                  mapMarkes(ag, 'red')
+                                }
+                                  
+                               });
+                              
+                            });
+
+                          } 
+}
+
+
+
+
 
 var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                         .on('click', function(){
@@ -27,14 +96,15 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
 
                             var moneyOb = ballots[lIdx]
 
-                            //if there are elements then create a query
+                            
+                            var currval = $('input:radio[name=inlineRadioOptions]:checked').val()
 
 
-
-
-
-                            var cmtFor =[];
-
+                             d3.selectAll('.zipareas')
+                                .classed(['red', 'blue'], false)
+                            
+                            cmtFor =[];
+                            cmtAg = [];
 
                             moneyOb.cmt_for.forEach(function(f){
                                 if(f.query){
@@ -43,7 +113,7 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                                 }
                             });
 
-                            var cmtAg = [];
+                            
 
                             moneyOb.cmt_against.forEach(function(a){
                                 if(a.query){
@@ -80,29 +150,30 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
                             console.log("/data/m_"+ letter+ "_votes.json");
 
 
-                            var schAJson = schAUrl + "'" +cmtAg+ "'";
+                            //var schAJson = schAUrl + "'" +cmtAg+ "'";
 
-                            console.log(schAJson);
+                            //console.log(schAJson);
 
-                            
-                            cmtFor.forEach(function(url){
-                               d3.json(url, function(json){
-                                  mapMarkes(json, 'blue')
-                               })
-                            });
-                            
+                           
 
-                            cmtAg.forEach(function(url){
-                               d3.json(url, function(json){
-                                  mapMarkes(json, 'red')
-                               })
-                            });
-                            
+                            var allzips = {};
+                            allzips.for_sum = 0;
+                            allzips.ag_sum = 0;
+
+
+                            var forzips = {};
+                            forzips.sum = 0;
+
+                            var agzips = {};
+                            agzips.sum = 0;
+
+ 
+                            swtichMoney(currval);
 
                             d3.select('#supp-opp-radio').style('opacity', 1)
                             //d3.select('#oppRadio').attr('checked', true);
 
-
+                           
 
                             queue()
                                 .defer(d3.json, ballotURL)
@@ -114,32 +185,49 @@ var ballotSelector = d3.selectAll('#ballot-dropdown li a')
 
 function mapMarkes(schAJson, color){
 
-  console.log(schAJson.length, color)
+  //console.log(schAJson)
+
+  var allamts = d3.map(schAJson, function(d){ return d.tran_amt2})
+
+  var total = d3.sum(allamts);
+
 
   schAJson.forEach(function(d){
 
-    if(d.tran_location){
-      var lat = d.tran_location.latitude;
-      var lng = d.tran_location.longitude; 
+    
+
+    if(d.tran_zip4){
+
+      //console.log(d)
+      //var lat = d.tran_location.latitude;
+      //var lng = d.tran_location.longitude; 
       var amt = d.tran_amt2;
+      var z_code = d.tran_zip4;
+      var mapId = '#zip_' + z_code;
+      var pct = d.tran_amt2/total
+      var qt = quantize(pct)
 
 
-      console.log(amt)
-      console.log([lat, lng])
+      //console.log(amt)
+      //console.log([lat, lng])
+     
 
-      //map.latLngToLayerPoint([lng, lat])
+      d3.select(mapId)
+        //.attr('class', qt)
+        //.classed(capitalizeFirstLetter(color), true)
+        //.style('fill', color)
+        .classed(color, true)
 
 
-      var circle = L.circle([lat, lng], 50, {
-            color: color,
-            fillColor: color,
-            fillOpacity: 0.5
-        }).addTo(map);
+      
 
 
     }
   })
+
+  
 }
+
 
 
 var votesTooltip = d3.select('#map1')
@@ -164,9 +252,27 @@ var projection = d3.geo.mercator()
 var path = d3.geo.path()
     .projection(projection);
 
+
+var projection2 = d3.geo.mercator()
+                  .translate([width / 2, height / 2])
+                  .scale([79900])
+                  .center([-122.43198394775389, 37.76365837331252]);
+
+var path2 = d3.geo.path()
+    .projection(projection2);
+
+
+
+
+
+
 var svg = d3.select("#map1").append("svg")
     .attr("width", width)
     .attr("height", height);
+
+var svg2 = d3.select("#map2").append("svg")
+    .attr("width", width)
+    .attr("height", height);    
 
 
 var sfMapData;
@@ -174,6 +280,7 @@ var sfNeighData;
 var ballotVotesData;
 
 var precincts;
+var zips;
 
 var neighIdx =[];
 var allNeigh =[];
@@ -183,12 +290,14 @@ queue()
     
     .defer(d3.json, "/data/precincts.json")
     .defer(d3.json, "/data/prect2neigh.json")
-    //.defer(d3.json, "/data/m_f_votes.json")
+    //.defer(d3.json, "/data/sfzipcode.json")
+    .defer(d3.json, "/data/sf.json")
     .await(ready);
 
-function ready(error, sf, neigh) {
+function ready(error, sf, neigh, zipmap) {
   if (error) throw error;
 
+  console.log(zipmap)
 
   sfMapData = sf;
   sfNeighData = neigh;
@@ -235,6 +344,25 @@ precincts= svg.append("g")
         //select d3 precincts by id and do something thing
 
     })
+
+
+zips = svg2.append("g")
+             .attr("class", "zipareas")
+              .selectAll("path")
+              //.data(topojson.feature(zipmap, zipmap.objects.sfzipcode).features)
+              .data(topojson.feature(zipmap, zipmap.objects.geo).features)
+              .enter().append("path")
+                
+                //.attr("class", function(d) { return quantize(rateById.get(d.id)); })
+              .attr('id', function(d){
+                 return 'zip_' + d.properties.ZIP;
+              })
+              .attr("d", path2)
+              .attr('class', 'zip')
+
+
+
+
       
 }//ready
 
@@ -259,7 +387,9 @@ function votesAndMoney(error, votes){
 
 function changeColor(checked){
 
-        console.log(checked);
+        console.log('change color function is ' + checked);
+
+        swtichMoney(checked)
 
             if(checked=='support'){
 
@@ -268,6 +398,7 @@ function changeColor(checked){
               .classed('Blues', true)
 
               changeValue('Yes');
+              //mapMarkes(mfor, 'blue')
 
            }
            else{
@@ -276,6 +407,8 @@ function changeColor(checked){
               .classed('Blues', false)
 
               changeValue('No')
+
+              //mapMarkes(ag, 'red')
            }
 }
 
@@ -356,6 +489,8 @@ function changeValue(checked){
 
 
            changeColor(checked)
+
+           
                               
          })
 
